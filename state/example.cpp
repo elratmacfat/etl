@@ -26,7 +26,9 @@ public:
     { 
         std::cout << "a: " << i << '\n'; 
         if ( i==5 )
+        {
             transition(m_b);
+        }
     }
 
     void set_b(state<int>* b) 
@@ -55,10 +57,13 @@ public:
     { 
         std::cout << "b: " << i << '\n'; 
         if ( i == 8 )
+        {
             transition(m_a);
+        }
     }
   
-    void set_a(state<int>* a) {
+    void set_a(state<int>* a) 
+    {
         m_a = a;
     }
 
@@ -75,19 +80,19 @@ private:
 
 int main()
 {
-	state<int>::context cs;
-	
-	state_a a(cs);
-	state_b b(cs);
-	
-	a.set_b(&b);
-	b.set_a(&a);
-	
-	cs.set_current_state(&a);
-	
-	std::vector<int> data{1,2,3,4,5,6,7,8,9,10};
-	for(auto& d : data )
-	    cs.request(d);
-	
-	return 0;
+    state<int>::context cs;
+    
+    state_a a(cs);
+    state_b b(cs);
+    
+    a.set_b(&b);
+    b.set_a(&a);
+    
+    cs.set_current_state(&a);
+    
+    std::vector<int> data{1,2,3,4,5,6,7,8,9,10};
+    for(auto& d : data )
+        cs.request(d);
+    
+    return 0;
 }
