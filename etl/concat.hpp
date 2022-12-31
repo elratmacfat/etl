@@ -1,4 +1,4 @@
-/// concat - concatenates an arbitrary amount arguments of different types to a single string.
+/// concat - concatenates an arbitrary amount of arguments of different types to a single string.
 ///          The types need to have a to_string() overload in an accessable namespace.
 ///
 #ifndef ETL_CONCAT_HPP
@@ -34,9 +34,5 @@ namespace etl
         return concat_intern::append(result,args...);
     }
 }
-
-
-
-
 
 #endif
