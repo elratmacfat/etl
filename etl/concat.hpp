@@ -1,37 +1,38 @@
 /// concat - concatenates an arbitrary amount of arguments of different types to a single string.
-///          The types need to have a to_string() overload in an accessable namespace.
+///          The types need to have the operator<< overloaded in an accessable namespace.
 ///
 #ifndef ETL_CONCAT_HPP
 #define ETL_CONCAT_HPP
 
-#include <string>
+#include <sstream>
 
 namespace etl 
 {
-    template <typename...Args> 
-    std::string concat(Args...args);
+    template <typename First, typename Second, typename...Rest> 
+    std::string concat(First first, Second second, Rest... rest);
     
     namespace concat_intern 
     {
-        std::string append(std::string& result)
+        template <typename Last>
+        std::string append(std::stringstream& result, Last last)
         {
-            return result;
+            result << last;
+            return result.str();
         }
         
         template <typename First, typename...Rest>
-        std::string append(std::string& result, First first, Rest...rest)
+        std::string append(std::stringstream& result, First first, Rest...rest)
         {
-            using namespace std;
-            result += to_string(first);
+            result << first;
             return append(result, rest...);
         }   
     }
     
-    template <typename...Args>
-    std::string concat(Args...args)
+    template <typename First, typename Second, typename...Rest> 
+    std::string concat(First first, Second second, Rest... rest)
     {
-        std::string result{};
-        return concat_intern::append(result,args...);
+        std::stringstream result{};
+        return concat_intern::append(result, first, second, rest...);
     }
 }
 
